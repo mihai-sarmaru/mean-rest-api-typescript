@@ -2,12 +2,16 @@ import express, {Application, Request, Response, NextFunction} from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
+import {DbConnection} from './database/dbConnection';
+
 class App {
     public readonly APP: Application;
 
     constructor() {
         this.APP = express();
         this.config();
+        // connect to db
+        DbConnection.connect();
         // error handling middleware
         this.configErrorHandling();
     }
