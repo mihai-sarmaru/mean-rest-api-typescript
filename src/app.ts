@@ -1,4 +1,4 @@
-import express, {Application} from 'express';
+import express, {Application, Request, Response, NextFunction} from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
@@ -8,6 +8,8 @@ class App {
     constructor() {
         this.APP = express();
         this.config();
+        // error handling middleware
+        this.configErrorHandling();
     }
 
     private config(): void {
@@ -16,6 +18,16 @@ class App {
         this.APP.use(bodyParser.urlencoded({extended: true}));
         // cors - access api from different domains
         this.APP.use(cors());
+    }
+
+    private configErrorHandling() {
+        this.APP.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+            res.status(500).send({
+                status: 500,
+                message: err.message,
+                body: {}
+            });
+        });
     }
 }
 
