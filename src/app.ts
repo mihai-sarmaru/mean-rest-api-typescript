@@ -1,4 +1,5 @@
 import express, {Application} from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 
 class App {
@@ -10,8 +11,11 @@ class App {
     }
 
     private config(): void {
+        // request payload middleware
         this.APP.use(bodyParser.json());
         this.APP.use(bodyParser.urlencoded({extended: true}));
+        // cors - access api from different domains
+        this.APP.use(cors());
     }
 }
 
