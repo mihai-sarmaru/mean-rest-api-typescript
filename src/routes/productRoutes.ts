@@ -1,17 +1,20 @@
-import express, {Router, Request, Response} from 'express';
+import {Router} from 'express';
+
+import {ProductController} from '../controllers/productController';
 
 class ProductRoutes {
     public router: Router;
+    private productController: ProductController;
 
     constructor() {
         this.router = Router();
+        this.productController = new ProductController();
+
         this.getProductRoutes();
     }
 
     private getProductRoutes() {
-        this.router.post('/', (req: Request, res: Response) => {
-            res.send({message: "POST PRODUCT"});
-        });
+        this.router.post('/', this.productController.createProduct);
     }
 }
 
