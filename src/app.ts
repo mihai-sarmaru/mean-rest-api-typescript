@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import {DbConnection} from './database/dbConnection';
+import ProductRouter from './routes/productRoutes';
 
 class App {
     public readonly APP: Application;
@@ -14,6 +15,8 @@ class App {
         DbConnection.connect();
         // error handling middleware
         this.configErrorHandling();
+
+        this.configRouters();
     }
 
     private config(): void {
@@ -22,6 +25,10 @@ class App {
         this.APP.use(bodyParser.urlencoded({extended: true}));
         // cors - access api from different domains
         this.APP.use(cors());
+    }
+
+    private configRouters() {
+        this.APP.use('/api/v1/product', ProductRouter);
     }
 
     private configErrorHandling() {

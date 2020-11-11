@@ -1,13 +1,25 @@
 import mongoose, {Schema} from 'mongoose';
 
+export type ProductType = {
+    name: string,
+    price: number,
+    brand: string
+}
+
 const productSchema = new Schema({
     name: String,
     price: Number,
     brand: String
 }, {
-    timestamps: true
+    timestamps: true,
+    toObject: {
+        transform: function(doc, ret, options) {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.__v;
+            return ret;
+        }
+    }
 });
 
-const Product = mongoose.model('Product', productSchema);
-
-export default Product;
+export const Product = mongoose.model('Product', productSchema);
