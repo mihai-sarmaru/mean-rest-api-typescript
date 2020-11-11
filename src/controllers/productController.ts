@@ -1,12 +1,17 @@
 import {Request, Response} from 'express';
-import {ServerResponse} from '../constants/constants';
+import {ServerResponse, ProductMessage} from '../constants/constants';
+import {ProductService} from '../services/productService';
 
 export class ProductController {
 
     public async createProduct(req: Request, res: Response) {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            throw new Error('Not implemented yet');
+            const serviceResponse = await new ProductService().createProduct(req.body);
+            
+            response.statusCode = 200;
+            response.message = ProductMessage.PRODUCT_CREATED;
+            response.body = serviceResponse;
         } catch (error) {
             console.log('Something went wrong: Controller: createProduct', error);
             response.message = error.message;
