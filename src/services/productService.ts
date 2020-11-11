@@ -6,7 +6,7 @@ export class ProductService {
         try {
             let product = new Product({...productData});
             const result = await product.save();
-            return result;
+            return result.toObject();
         } catch (error) {
             console.log('Something went wrong: Service: createProduct', error);
             throw new Error(error);
