@@ -15,3 +15,7 @@ export class ServerResponse {
 export class ProductMessage {
     public static PRODUCT_CREATED: string = 'Product created successfully';
 }
+
+export class ValidationMessage {
+    public static BAD_REQUEST: string = 'Invalid Fields';
+}
