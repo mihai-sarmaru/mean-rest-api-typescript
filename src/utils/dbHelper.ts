@@ -1,4 +1,5 @@
-import {Document} from 'mongoose';
+import mongoose, {Document} from 'mongoose';
+import {DatabaseMessage} from '../constants/constants';
 
 export class DbHelper {
 
@@ -11,6 +12,12 @@ export class DbHelper {
             return newDataArray;
         }
         return mongoData.toObject();
+    }
+
+    public static checkObjectId(id: string) {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            throw new Error(DatabaseMessage.INVALID_ID);
+        }
     }
 
 }

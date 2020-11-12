@@ -23,6 +23,9 @@ class ProductRoutes {
         this.router.get('/',
             JoiValidation.validateQueryParams(getAllProductsSchema),
             this.productController.getAllProducts);
+
+        this.router.get('/:id',
+            this.productController.getProductById);
     }
 }
 
