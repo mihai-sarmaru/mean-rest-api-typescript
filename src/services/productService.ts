@@ -1,10 +1,10 @@
-import {Product, ProductType} from '../models/product';
+import {Product, IProduct} from '../models/product';
 import {DbHelper} from '../utils/dbHelper';
 import {ProductMessage} from '../constants/constants';
 
 export class ProductService {
 
-    public async createProduct(productData: ProductType) {
+    public async createProduct(productData: IProduct) {
         try {
             let product = new Product({...productData});
             const result = await product.save();

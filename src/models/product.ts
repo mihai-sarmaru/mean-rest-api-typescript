@@ -1,6 +1,6 @@
 import mongoose, {Schema} from 'mongoose';
 
-export type ProductType = {
+export interface IProduct extends mongoose.Document {
     name: string,
     price: number,
     brand: string
@@ -22,4 +22,4 @@ const productSchema = new Schema({
     }
 });
 
-export const Product = mongoose.model('Product', productSchema);
+export const Product = mongoose.model<IProduct>('Product', productSchema);
