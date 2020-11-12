@@ -12,6 +12,10 @@ export class ServerResponse {
     };
 }
 
+export class BCrypt {
+    public static DEFAULT_RECOMMENDED_SALT_ROUND: number = 12;
+}
+
 export class ProductMessage {
     public static PRODUCT_CREATED: string = 'Product created successfully';
     public static PRODUCT_FETCHED: string = 'Product fetched successfully';
