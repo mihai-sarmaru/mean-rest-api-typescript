@@ -26,7 +26,10 @@ export class ProductMessage {
 
 export class UserMessage {
     public static SIGNUP_SUCCESS: string = 'Signed up successfully';
+    public static LOGIN_SUCCESS: string = 'Logged in successfully';
     public static USER_EXISTS: string = 'Signup email already exists';
+    public static USER_NOT_FOUND: string = 'User not found';
+    public static INVALID_PASSWORD: string = 'Incorrect password';
 }
 
 export class ValidationMessage {

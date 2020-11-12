@@ -1,7 +1,7 @@
 import {Router} from 'express';
 
 import {JoiValidation} from '../middleware/joiSchemaValidation';
-import {userSchema} from '../schema/userSchema';
+import {userSchema, loginSchema} from '../schema/userSchema';
 import {UserController} from '../controllers/userController';
 
 class UserRoutes {
@@ -19,6 +19,10 @@ class UserRoutes {
         this.router.post('/signup',
             JoiValidation.validateBody(userSchema),
             this.userController.signup);
+
+        this.router.post('/login',
+            JoiValidation.validateBody(loginSchema),
+            this.userController.login);
     }
 }
 
