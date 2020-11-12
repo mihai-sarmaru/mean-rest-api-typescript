@@ -22,6 +22,7 @@ export class ProductMessage {
 
 export class UserMessage {
     public static SIGNUP_SUCCESS: string = 'Signed up successfully';
+    public static USER_EXISTS: string = 'Signup email already exists';
 }
 
 export class ValidationMessage {

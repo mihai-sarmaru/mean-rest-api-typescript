@@ -7,7 +7,7 @@ export class UserController {
     public async signup(req: Request, res: Response) {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new UserService().signup();
+            const serviceResponse = await new UserService().signup(req.body);
             
             response.statusCode = 200;
             response.message = UserMessage.SIGNUP_SUCCESS;
