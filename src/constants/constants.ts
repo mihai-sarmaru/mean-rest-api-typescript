@@ -20,6 +20,10 @@ export class ProductMessage {
     public static PRODUCT_DELETED: string = 'Product deleted successfully';
 }
 
+export class UserMessage {
+    public static SIGNUP_SUCCESS: string = 'Signed up successfully';
+}
+
 export class ValidationMessage {
     public static BAD_REQUEST: string = 'Invalid Fields';
 }
