@@ -4,16 +4,13 @@
   "description": "MEAN REST API using Node.js and TypeScript",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc --w",
-    "dev": "nodemon ./dist/server.js",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node ./dist/server.js",
+    "dev": "ts-node ./src/server.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Predator7/mean-rest-api-typescript.git"
-  },
+  "repository": "git+https://github.com/Predator7/mean-rest-api-typescript.git",
   "keywords": [],
-  "author": "",
+  "author": "Mihai Sarmaru <mihai.sarmaru@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Predator7/mean-rest-api-typescript/issues"
@@ -33,7 +30,6 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.13",
-    "nodemon": "^2.0.6",
     "ts-dotenv": "^0.8.1",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
