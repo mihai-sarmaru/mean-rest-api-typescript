@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import {dotEnv} from '../utils/env';
 import {User, IUser} from '../models/user';
 import {BCrypt, UserMessage} from '../constants/constants';
 import {DbHelper} from '../utils/dbHelper';
@@ -40,6 +42,10 @@ export class UserService {
             if (!isPasswordValid) {
                 throw new Error(UserMessage.INVALID_PASSWORD);
             }
+
+            // create and return json-web-token
+            const token = jwt.sign({id: user._id}, dotEnv.JWT_PRIVATE_KEY, {expiresIn: '1d'});
+            return {token: token};
 
         } catch (error) {
             console.log('Something went wrong: Service: login', error);
