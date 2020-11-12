@@ -1,6 +1,8 @@
 import {Router} from 'express';
 
 import {ProductController} from '../controllers/productController';
+import {JoiValidation} from '../middleware/joiSchemaValidation';
+import {productSchema} from '../schema/productSchema';
 
 class ProductRoutes {
     public router: Router;
@@ -14,7 +16,9 @@ class ProductRoutes {
     }
 
     private getProductRoutes() {
-        this.router.post('/', this.productController.createProduct);
+        this.router.post('/',
+            JoiValidation.validateBody(productSchema),
+            this.productController.createProduct);
     }
 }
 
