@@ -5,3 +5,8 @@ export const productSchema = joi.object().keys({
     price: joi.number().required(),
     brand: joi.string().required()
 });
+
+export const getAllProductsSchema = joi.object().keys({
+    skip: joi.string(),
+    limit: joi.string()
+});

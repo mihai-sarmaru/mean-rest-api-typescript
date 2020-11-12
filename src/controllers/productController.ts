@@ -22,7 +22,7 @@ export class ProductController {
     public async getAllProducts(req: Request, res: Response) {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new ProductService().getAllProducts();
+            const serviceResponse = await new ProductService().getAllProducts(req.query);
             
             response.statusCode = 200;
             response.message = ProductMessage.PRODUCT_FETCHED;

@@ -14,9 +14,9 @@ export class ProductService {
         }
     }
 
-    public async getAllProducts() {
+    public async getAllProducts({skip = '0', limit = '10'}) { // <-- destructured string params
         try {
-            let products = await Product.find({});
+            let products = await Product.find({}).skip(parseInt(skip)).limit(parseInt(limit));
             return DbHelper.formatMongoData(products);
         } catch (error) {
             console.log('Something went wrong: Service: getAllProducts', error);

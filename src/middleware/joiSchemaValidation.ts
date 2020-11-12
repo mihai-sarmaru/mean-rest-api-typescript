@@ -17,6 +17,19 @@ export class JoiValidation {
         }
     }
 
+    public static validateQueryParams(schema: ObjectSchema) {
+        return (req: Request, res: Response, next: NextFunction) => {
+            const response = {...ServerResponse.defaultServerResponse};
+            const error = this.validateObjectSchema(req.query, schema);
+            if (error) {
+                response.body = error;
+                response.message = ValidationMessage.BAD_REQUEST;
+                return res.status(response.statusCode).send(response);
+            }
+            return next();
+        }
+    }
+
     private static validateObjectSchema(dataObject: any, schema: ObjectSchema) {
         const result = schema.validate(dataObject, {convert: false});
 
