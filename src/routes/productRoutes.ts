@@ -19,6 +19,8 @@ class ProductRoutes {
         this.router.post('/',
             JoiValidation.validateBody(productSchema),
             this.productController.createProduct);
+
+        this.router.get('/', this.productController.getAllProducts);
     }
 }
 

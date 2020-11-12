@@ -13,4 +13,14 @@ export class ProductService {
         }
     }
 
+    public async getAllProducts() {
+        try {
+            let products = await Product.find({});
+            return products;
+        } catch (error) {
+            console.log('Something went wrong: Service: getAllProducts', error);
+            throw new Error(error);
+        }
+    }
+
 }

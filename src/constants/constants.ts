@@ -14,6 +14,7 @@ export class ServerResponse {
 
 export class ProductMessage {
     public static PRODUCT_CREATED: string = 'Product created successfully';
+    public static PRODUCT_FETCHED: string = 'Product fetched successfully';
 }
 
 export class ValidationMessage {
