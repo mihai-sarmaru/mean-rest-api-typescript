@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 
 import {DbConnection} from './database/dbConnection';
 import ProductRouter from './routes/productRoutes';
+import UserRouter from './routes/userRoutes';
 
 class App {
     public readonly APP: Application;
@@ -29,6 +30,7 @@ class App {
 
     private configRouters() {
         this.APP.use('/api/v1/product', ProductRouter);
+        this.APP.use('/api/v1/user', UserRouter);
     }
 
     private configErrorHandling() {
