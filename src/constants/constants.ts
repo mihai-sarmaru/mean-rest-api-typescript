@@ -33,7 +33,9 @@ export class UserMessage {
 }
 
 export class ValidationMessage {
-    public static BAD_REQUEST: string = 'Invalid Fields';
+    public static BAD_REQUEST: string = 'Invalid fields';
+    public static NO_TOKEN: string = 'Token is missing from header';
+    public static INVALID_TOKEN: string = 'Token is invalid';
 }
 
 export class DatabaseMessage {
