@@ -1,4 +1,5 @@
 import {Product, ProductType} from '../models/product';
+import {DbHelper} from '../utils/dbHelper';
 
 export class ProductService {
 
@@ -6,7 +7,7 @@ export class ProductService {
         try {
             let product = new Product({...productData});
             const result = await product.save();
-            return result.toObject();
+            return DbHelper.formatMongoData(result);
         } catch (error) {
             console.log('Something went wrong: Service: createProduct', error);
             throw new Error(error);
@@ -16,7 +17,7 @@ export class ProductService {
     public async getAllProducts() {
         try {
             let products = await Product.find({});
-            return products;
+            return DbHelper.formatMongoData(products);
         } catch (error) {
             console.log('Something went wrong: Service: getAllProducts', error);
             throw new Error(error);
