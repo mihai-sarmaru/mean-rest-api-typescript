@@ -64,4 +64,19 @@ export class ProductController {
         return res.status(response.statusCode).send(response);
     }
 
+    public async deleteProduct(req: Request, res: Response) {
+        let response = {...ServerResponse.defaultServerResponse};
+        try {
+            const serviceResponse = await new ProductService().deleteProduct(req.params.id);
+            
+            response.statusCode = 200;
+            response.message = ProductMessage.PRODUCT_DELETED;
+            response.body = serviceResponse;
+        } catch (error) {
+            console.log('Something went wrong: Controller: deleteProduct', error);
+            response.message = error.message;
+        }
+        return res.status(response.statusCode).send(response);
+    }
+
 }

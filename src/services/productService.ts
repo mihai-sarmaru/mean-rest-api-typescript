@@ -55,4 +55,18 @@ export class ProductService {
         }
     }
 
+    public async deleteProduct(id: string) {
+        try {
+            DbHelper.checkObjectId(id);
+
+            let product = await Product.findByIdAndDelete(id);
+            if (!product) {
+                throw new Error(ProductMessage.PRODUCT_NOT_FOUND);
+            }
+            return DbHelper.formatMongoData(product);
+        } catch (error) {
+            console.log('Something went wrong: Service: deleteProduct', error);
+            throw new Error(error);
+        }
+    }
 }

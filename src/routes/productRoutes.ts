@@ -30,6 +30,9 @@ class ProductRoutes {
         this.router.put('/:id',
             JoiValidation.validateBody(updateProductSchema),
             this.productController.updateProduct);
+
+        this.router.delete('/:id',
+            this.productController.deleteProduct);
     }
 }
 
