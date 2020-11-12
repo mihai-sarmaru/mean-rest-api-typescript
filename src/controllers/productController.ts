@@ -49,4 +49,19 @@ export class ProductController {
         return res.status(response.statusCode).send(response);
     }
 
+    public async updateProduct(req: Request, res: Response) {
+        let response = {...ServerResponse.defaultServerResponse};
+        try {
+            const serviceResponse = await new ProductService().updateProduct(req.params.id, req.body);
+            
+            response.statusCode = 200;
+            response.message = ProductMessage.PRODUCT_FETCHED;
+            response.body = serviceResponse;
+        } catch (error) {
+            console.log('Something went wrong: Controller: updateProduct', error);
+            response.message = error.message;
+        }
+        return res.status(response.statusCode).send(response);
+    }
+
 }

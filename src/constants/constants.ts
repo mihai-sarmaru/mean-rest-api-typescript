@@ -16,6 +16,7 @@ export class ProductMessage {
     public static PRODUCT_CREATED: string = 'Product created successfully';
     public static PRODUCT_FETCHED: string = 'Product fetched successfully';
     public static PRODUCT_NOT_FOUND: string = 'Product not found';
+    public static PRODUCT_UPDATED: string = 'Product updated successfully';
 }
 
 export class ValidationMessage {

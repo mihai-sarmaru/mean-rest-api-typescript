@@ -40,4 +40,19 @@ export class ProductService {
         }
     }
 
+    public async updateProduct(id: string, updateInfo: any) {
+        try {
+            DbHelper.checkObjectId(id);
+
+            let product = await Product.findOneAndUpdate({_id: id}, updateInfo, {new: true});
+            if (!product) {
+                throw new Error(ProductMessage.PRODUCT_NOT_FOUND);
+            }
+            return DbHelper.formatMongoData(product);
+        } catch (error) {
+            console.log('Something went wrong: Service: updateProduct', error);
+            throw new Error(error);
+        }
+    }
+
 }

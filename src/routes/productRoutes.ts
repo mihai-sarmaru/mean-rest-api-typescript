@@ -2,7 +2,7 @@ import {Router} from 'express';
 
 import {ProductController} from '../controllers/productController';
 import {JoiValidation} from '../middleware/joiSchemaValidation';
-import {productSchema, getAllProductsSchema} from '../schema/productSchema';
+import {productSchema, getAllProductsSchema, updateProductSchema} from '../schema/productSchema';
 
 class ProductRoutes {
     public router: Router;
@@ -26,6 +26,10 @@ class ProductRoutes {
 
         this.router.get('/:id',
             this.productController.getProductById);
+
+        this.router.put('/:id',
+            JoiValidation.validateBody(updateProductSchema),
+            this.productController.updateProduct);
     }
 }
 
