@@ -32,7 +32,7 @@ export class UserController {
             
             response.statusCode = 200;
             response.message = UserMessage.LOGIN_SUCCESS;
-            response.body = serviceResponse;
+            response.body = serviceResponse!;
         } catch (error) {
             console.log('Something went wrong: Controller: login', error);
             response.message = error.message;
