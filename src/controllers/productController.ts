@@ -4,10 +4,16 @@ import {ProductService} from '../services/productService';
 
 export class ProductController {
 
+    private productService: ProductService;
+
+    constructor() {
+        this.productService = new ProductService();
+    }
+
     public createProduct = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new ProductService().createProduct(req.body);
+            const serviceResponse = await this.productService.createProduct(req.body);
             
             response.statusCode = 200;
             response.message = ProductMessage.PRODUCT_CREATED;
@@ -22,7 +28,7 @@ export class ProductController {
     public getAllProducts = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new ProductService().getAllProducts(req.query);
+            const serviceResponse = await this.productService.getAllProducts(req.query);
             
             response.statusCode = 200;
             response.message = ProductMessage.PRODUCT_FETCHED;
@@ -37,7 +43,7 @@ export class ProductController {
     public getProductById = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new ProductService().getProductById(req.params.id);
+            const serviceResponse = await this.productService.getProductById(req.params.id);
             
             response.statusCode = 200;
             response.message = ProductMessage.PRODUCT_FETCHED;
@@ -52,7 +58,7 @@ export class ProductController {
     public updateProduct = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new ProductService().updateProduct(req.params.id, req.body);
+            const serviceResponse = await this.productService.updateProduct(req.params.id, req.body);
             
             response.statusCode = 200;
             response.message = ProductMessage.PRODUCT_FETCHED;
@@ -67,7 +73,7 @@ export class ProductController {
     public deleteProduct = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new ProductService().deleteProduct(req.params.id);
+            const serviceResponse = await this.productService.deleteProduct(req.params.id);
             
             response.statusCode = 200;
             response.message = ProductMessage.PRODUCT_DELETED;
