@@ -4,7 +4,7 @@ import {ProductService} from '../services/productService';
 
 export class ProductController {
 
-    public async createProduct(req: Request, res: Response) {
+    public createProduct = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
             const serviceResponse = await new ProductService().createProduct(req.body);
@@ -19,7 +19,7 @@ export class ProductController {
         return res.status(response.statusCode).send(response);
     }
 
-    public async getAllProducts(req: Request, res: Response) {
+    public getAllProducts = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
             const serviceResponse = await new ProductService().getAllProducts(req.query);
@@ -34,7 +34,7 @@ export class ProductController {
         return res.status(response.statusCode).send(response);
     }
 
-    public async getProductById(req: Request, res: Response) {
+    public getProductById = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
             const serviceResponse = await new ProductService().getProductById(req.params.id);
@@ -49,7 +49,7 @@ export class ProductController {
         return res.status(response.statusCode).send(response);
     }
 
-    public async updateProduct(req: Request, res: Response) {
+    public updateProduct = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
             const serviceResponse = await new ProductService().updateProduct(req.params.id, req.body);
@@ -64,7 +64,7 @@ export class ProductController {
         return res.status(response.statusCode).send(response);
     }
 
-    public async deleteProduct(req: Request, res: Response) {
+    public deleteProduct = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
             const serviceResponse = await new ProductService().deleteProduct(req.params.id);

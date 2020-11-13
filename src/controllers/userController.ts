@@ -4,7 +4,7 @@ import {UserService} from '../services/userService';
 
 export class UserController {
 
-    public async signup(req: Request, res: Response) {
+    public signup = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
             const serviceResponse = await new UserService().signup(req.body);
@@ -19,7 +19,7 @@ export class UserController {
         return res.status(response.statusCode).send(response);
     }
 
-    public async login(req: Request, res: Response) {
+    public login = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
             const serviceResponse = await new UserService().login(req.body);
