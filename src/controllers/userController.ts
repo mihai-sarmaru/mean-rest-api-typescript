@@ -1,37 +1,34 @@
 import {Request, Response} from 'express';
-import { ServerResponse, UserMessage } from "../constants/constants";
+import { UserMessage } from "../constants/constants";
 import {UserService} from '../services/userService';
+import {SendResponseHelper} from './helpers/sendResponseHelper';
 
 export class UserController {
 
-    public async signup(req: Request, res: Response) {
-        let response = {...ServerResponse.defaultServerResponse};
-        try {
-            const serviceResponse = await new UserService().signup(req.body);
-            
-            response.statusCode = 200;
-            response.message = UserMessage.SIGNUP_SUCCESS;
-            response.body = serviceResponse;
-        } catch (error) {
-            console.log('Something went wrong: Controller: signup', error);
-            response.message = error.message;
-        }
-        return res.status(response.statusCode).send(response);
+    private userService: UserService;
+    private responseHelper: SendResponseHelper;
+
+    constructor() {
+        this.userService = new UserService();
+        this.responseHelper = new SendResponseHelper();
     }
 
-    public async login(req: Request, res: Response) {
-        let response = {...ServerResponse.defaultServerResponse};
+    public signup = async (req: Request, res: Response) => {
         try {
-            const serviceResponse = await new UserService().login(req.body);
-            
-            response.statusCode = 200;
-            response.message = UserMessage.SIGNUP_SUCCESS;
-            response.body = serviceResponse;
+            const serviceResponse = await this.userService.signup(req.body);
+            this.responseHelper.sendServiceResponse(serviceResponse, UserMessage.SIGNUP_SUCCESS, res);
         } catch (error) {
-            console.log('Something went wrong: Controller: login', error);
-            response.message = error.message;
+            this.responseHelper.sendServiceError(error, 'signup', res);
         }
-        return res.status(response.statusCode).send(response);
+    }
+
+    public login = async (req: Request, res: Response) => {
+        try {
+            const serviceResponse = await this.userService.login(req.body);
+            this.responseHelper.sendServiceResponse(serviceResponse, UserMessage.LOGIN_SUCCESS, res);
+        } catch (error) {
+            this.responseHelper.sendServiceError(error, 'login', res);
+        }
     }
 
 }

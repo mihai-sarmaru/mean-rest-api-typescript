@@ -7,7 +7,7 @@ import {DbHelper} from '../utils/dbHelper';
 
 export class UserService {
 
-    public async signup(userInfo: IUser) {
+    public signup = async (userInfo: IUser) => {
         try {
             // check if user exists
             const user = await User.findOne({email: userInfo.email});
@@ -24,12 +24,11 @@ export class UserService {
             return DbHelper.formatMongoData(result);
 
         } catch (error) {
-            console.log('Something went wrong: Service: signup', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'signup');
         }
     }
 
-    public async login(userInfo: IUser) {
+    public login = async (userInfo: IUser) => {
         try {
             // check if user exists
             const user = await User.findOne({email: userInfo.email});
@@ -48,9 +47,13 @@ export class UserService {
             return {token: token};
 
         } catch (error) {
-            console.log('Something went wrong: Service: login', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'login');
         }
+    }
+
+    private throwServiceError = (error: any, methodName: string) => {
+        console.log('Something went wrong: Service: ' + methodName, error);
+        throw new Error(error);
     }
 
 }

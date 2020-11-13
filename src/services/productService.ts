@@ -4,28 +4,26 @@ import {ProductMessage} from '../constants/constants';
 
 export class ProductService {
 
-    public async createProduct(productData: IProduct) {
+    public createProduct = async (productData: IProduct) => {
         try {
             let product = new Product({...productData});
             const result = await product.save();
             return DbHelper.formatMongoData(result);
         } catch (error) {
-            console.log('Something went wrong: Service: createProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'createProduct');
         }
     }
 
-    public async getAllProducts({skip = '0', limit = '10'}) { // <-- destructured string params
+    public getAllProducts = async ({skip = '0', limit = '10'}) => { // <-- destructured string params
         try {
             let products = await Product.find({}).skip(parseInt(skip)).limit(parseInt(limit));
             return DbHelper.formatMongoData(products);
         } catch (error) {
-            console.log('Something went wrong: Service: getAllProducts', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'getAllProducts');
         }
     }
 
-    public async getProductById(id: string) {
+    public getProductById = async (id: string) => {
         try {
             DbHelper.checkObjectId(id);
 
@@ -35,12 +33,11 @@ export class ProductService {
             }
             return DbHelper.formatMongoData(product);
         } catch (error) {
-            console.log('Something went wrong: Service: getProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'getProductById');
         }
     }
 
-    public async updateProduct(id: string, updateInfo: any) {
+    public updateProduct = async (id: string, updateInfo: any) => {
         try {
             DbHelper.checkObjectId(id);
 
@@ -50,12 +47,11 @@ export class ProductService {
             }
             return DbHelper.formatMongoData(product);
         } catch (error) {
-            console.log('Something went wrong: Service: updateProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'updateProduct');
         }
     }
 
-    public async deleteProduct(id: string) {
+    public deleteProduct = async (id: string) => {
         try {
             DbHelper.checkObjectId(id);
 
@@ -65,8 +61,12 @@ export class ProductService {
             }
             return DbHelper.formatMongoData(product);
         } catch (error) {
-            console.log('Something went wrong: Service: deleteProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'deleteProduct');
         }
+    }
+
+    private throwServiceError = (error: any, methodName: string) => {
+        console.log('Something went wrong: Service: ' + methodName, error);
+        throw new Error(error);
     }
 }

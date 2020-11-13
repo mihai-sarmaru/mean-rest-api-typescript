@@ -1,82 +1,61 @@
 import {Request, Response} from 'express';
 import {ServerResponse, ProductMessage} from '../constants/constants';
 import {ProductService} from '../services/productService';
+import {SendResponseHelper} from './helpers/sendResponseHelper';
 
 export class ProductController {
 
-    public async createProduct(req: Request, res: Response) {
-        let response = {...ServerResponse.defaultServerResponse};
-        try {
-            const serviceResponse = await new ProductService().createProduct(req.body);
-            
-            response.statusCode = 200;
-            response.message = ProductMessage.PRODUCT_CREATED;
-            response.body = serviceResponse;
-        } catch (error) {
-            console.log('Something went wrong: Controller: createProduct', error);
-            response.message = error.message;
-        }
-        return res.status(response.statusCode).send(response);
+    private productService: ProductService;
+    private responseHelper: SendResponseHelper;
+
+    constructor() {
+        this.productService = new ProductService();
+        this.responseHelper = new SendResponseHelper();
     }
 
-    public async getAllProducts(req: Request, res: Response) {
-        let response = {...ServerResponse.defaultServerResponse};
+    public createProduct = async (req: Request, res: Response) => {
         try {
-            const serviceResponse = await new ProductService().getAllProducts(req.query);
-            
-            response.statusCode = 200;
-            response.message = ProductMessage.PRODUCT_FETCHED;
-            response.body = serviceResponse;
+            const serviceResponse = await this.productService.createProduct(req.body);
+            this.responseHelper.sendServiceResponse(serviceResponse, ProductMessage.PRODUCT_CREATED, res);
         } catch (error) {
-            console.log('Something went wrong: Controller: getAllProducts', error);
-            response.message = error.message;
+            this.responseHelper.sendServiceError(error, 'createProduct', res);
         }
-        return res.status(response.statusCode).send(response);
     }
 
-    public async getProductById(req: Request, res: Response) {
-        let response = {...ServerResponse.defaultServerResponse};
+    public getAllProducts = async (req: Request, res: Response) => {
         try {
-            const serviceResponse = await new ProductService().getProductById(req.params.id);
-            
-            response.statusCode = 200;
-            response.message = ProductMessage.PRODUCT_FETCHED;
-            response.body = serviceResponse;
+            const serviceResponse = await this.productService.getAllProducts(req.query);
+            this.responseHelper.sendServiceResponse(serviceResponse, ProductMessage.PRODUCT_FETCHED, res);
         } catch (error) {
-            console.log('Something went wrong: Controller: getProductById', error);
-            response.message = error.message;
+            this.responseHelper.sendServiceError(error, 'getAllProducts', res);
         }
-        return res.status(response.statusCode).send(response);
     }
 
-    public async updateProduct(req: Request, res: Response) {
-        let response = {...ServerResponse.defaultServerResponse};
+    public getProductById = async (req: Request, res: Response) => {
         try {
-            const serviceResponse = await new ProductService().updateProduct(req.params.id, req.body);
-            
-            response.statusCode = 200;
-            response.message = ProductMessage.PRODUCT_FETCHED;
-            response.body = serviceResponse;
+            const serviceResponse = await this.productService.getProductById(req.params.id);
+            this.responseHelper.sendServiceResponse(serviceResponse, ProductMessage.PRODUCT_FETCHED, res);
         } catch (error) {
-            console.log('Something went wrong: Controller: updateProduct', error);
-            response.message = error.message;
+            this.responseHelper.sendServiceError(error, 'getProductById', res);
         }
-        return res.status(response.statusCode).send(response);
     }
 
-    public async deleteProduct(req: Request, res: Response) {
-        let response = {...ServerResponse.defaultServerResponse};
+    public updateProduct = async (req: Request, res: Response) => {
         try {
-            const serviceResponse = await new ProductService().deleteProduct(req.params.id);
-            
-            response.statusCode = 200;
-            response.message = ProductMessage.PRODUCT_DELETED;
-            response.body = serviceResponse;
+            const serviceResponse = await this.productService.updateProduct(req.params.id, req.body);
+            this.responseHelper.sendServiceResponse(serviceResponse, ProductMessage.PRODUCT_UPDATED, res);
         } catch (error) {
-            console.log('Something went wrong: Controller: deleteProduct', error);
-            response.message = error.message;
+            this.responseHelper.sendServiceError(error, 'updateProduct', res);
         }
-        return res.status(response.statusCode).send(response);
+    }
+
+    public deleteProduct = async (req: Request, res: Response) => {
+        try {
+            const serviceResponse = await this.productService.deleteProduct(req.params.id);
+            this.responseHelper.sendServiceResponse(serviceResponse, ProductMessage.PRODUCT_DELETED, res);
+        } catch (error) {
+            this.responseHelper.sendServiceError(error, 'deleteProduct', res);
+        }
     }
 
 }
