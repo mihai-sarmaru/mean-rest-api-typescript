@@ -24,8 +24,7 @@ export class UserService {
             return DbHelper.formatMongoData(result);
 
         } catch (error) {
-            console.log('Something went wrong: Service: signup', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'signup');
         }
     }
 
@@ -48,9 +47,13 @@ export class UserService {
             return {token: token};
 
         } catch (error) {
-            console.log('Something went wrong: Service: login', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'login');
         }
+    }
+
+    private throwServiceError = (error: any, methodName: string) => {
+        console.log('Something went wrong: Service: ' + methodName, error);
+        throw new Error(error);
     }
 
 }
