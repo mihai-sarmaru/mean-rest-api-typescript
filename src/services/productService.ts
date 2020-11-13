@@ -10,8 +10,7 @@ export class ProductService {
             const result = await product.save();
             return DbHelper.formatMongoData(result);
         } catch (error) {
-            console.log('Something went wrong: Service: createProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'createProduct');
         }
     }
 
@@ -20,8 +19,7 @@ export class ProductService {
             let products = await Product.find({}).skip(parseInt(skip)).limit(parseInt(limit));
             return DbHelper.formatMongoData(products);
         } catch (error) {
-            console.log('Something went wrong: Service: getAllProducts', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'getAllProducts');
         }
     }
 
@@ -35,8 +33,7 @@ export class ProductService {
             }
             return DbHelper.formatMongoData(product);
         } catch (error) {
-            console.log('Something went wrong: Service: getProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'getProductById');
         }
     }
 
@@ -50,8 +47,7 @@ export class ProductService {
             }
             return DbHelper.formatMongoData(product);
         } catch (error) {
-            console.log('Something went wrong: Service: updateProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'updateProduct');
         }
     }
 
@@ -65,8 +61,12 @@ export class ProductService {
             }
             return DbHelper.formatMongoData(product);
         } catch (error) {
-            console.log('Something went wrong: Service: deleteProduct', error);
-            throw new Error(error);
+            this.throwServiceError(error, 'deleteProduct');
         }
+    }
+
+    private throwServiceError = (error: any, methodName: string) => {
+        console.log('Something went wrong: Service: ' + methodName, error);
+        throw new Error(error);
     }
 }
