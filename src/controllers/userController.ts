@@ -4,10 +4,16 @@ import {UserService} from '../services/userService';
 
 export class UserController {
 
+    private userService: UserService;
+
+    constructor() {
+        this.userService = new UserService();
+    }
+
     public signup = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new UserService().signup(req.body);
+            const serviceResponse = await this.userService.signup(req.body);
             
             response.statusCode = 200;
             response.message = UserMessage.SIGNUP_SUCCESS;
@@ -22,10 +28,10 @@ export class UserController {
     public login = async (req: Request, res: Response) => {
         let response = {...ServerResponse.defaultServerResponse};
         try {
-            const serviceResponse = await new UserService().login(req.body);
+            const serviceResponse = await this.userService.login(req.body);
             
             response.statusCode = 200;
-            response.message = UserMessage.SIGNUP_SUCCESS;
+            response.message = UserMessage.LOGIN_SUCCESS;
             response.body = serviceResponse;
         } catch (error) {
             console.log('Something went wrong: Controller: login', error);
